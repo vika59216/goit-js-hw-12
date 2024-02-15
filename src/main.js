@@ -2,8 +2,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import axios from "axios";
-
+import axios from 'axios';
 
 const galleryContainer = document.querySelector('.gallery');
 const loaderContainer = document.getElementById('loader');
@@ -149,11 +148,3 @@ function appendImages(images) {
 function initializeLightbox() {
     new SimpleLightbox('.gallery a').refresh();
 }
-
-
-
-
-
-
-
-
