@@ -1,7 +1,28 @@
-import{i as g,S as $,a as E}from"./assets/vendor-5401a4b0.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))a(t);new MutationObserver(t=>{for(const o of t)if(o.type==="childList")for(const c of o.addedNodes)c.tagName==="LINK"&&c.rel==="modulepreload"&&a(c)}).observe(document,{childList:!0,subtree:!0});function n(t){const o={};return t.integrity&&(o.integrity=t.integrity),t.referrerPolicy&&(o.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?o.credentials="include":t.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function a(t){if(t.ep)return;t.ep=!0;const o=n(t);fetch(t.href,o)}})();const u=document.querySelector(".gallery"),B=document.getElementById("loader"),C=document.getElementById("search-form"),m=document.getElementById("load-more"),q=document.getElementById("loading-indicator"),S="42175181-9f2e4ea0c75ffabf50c3ef9f9";let l=1,y="",P=0,x=0;function h(e){g.success({title:"Success",message:e,position:"topRight"})}function i(e){g.error({title:"Error",message:e,position:"topRight"})}function s(e){m.style.display=e?"block":"none"}function d(e){B.style.display=e?"block":"none",q.style.display=e?"block":"none"}async function p(e,r=1){const n=`https://pixabay.com/api/?key=${S}&q=${encodeURIComponent(e)}&image_type=photo&orientation=horizontal&safesearch=true&page=${r}&per_page=15`;try{const a=await E.get(n);return x=a.data.totalHits,a.data.hits}catch(a){throw i("Failed to fetch images."),a}}async function H(){const e=u.querySelector(".image-card").getBoundingClientRect().height;window.scrollBy({top:2*e,left:0,behavior:"smooth"})}C.addEventListener("submit",async function(e){e.preventDefault(),s(!1);const r=document.getElementById("query").value.trim();if(!r){g.warning({title:"Warning",message:"Please enter a search query."});return}try{d(!0),y=r,l=1;const n=await p(r,l);n.length>0?(M(n),h(`Was found: ${n.length} images`),b(),n.length<15?(i("We are sorry, but you have reached the end of search results."),s(!1)):s(!0)):(u.innerHTML="",i("Sorry, there are no images matching your search query. Please try again!"),s(!1))}finally{d(!1)}});m.addEventListener("click",async function(){try{d(!0),l++;const e=await p(y,l);e.length>0?(L(e),h(`Loaded additional ${e.length} images`),b(),e.length<15&&(i("We are sorry, but you have reached the end of search results."),s(!1)),H()):(i("No more images to load"),s(!1))}catch{i("Failed to fetch additional images.")}finally{d(!1)}});function M(e){u.innerHTML="",L(e)}function L(e){const r=document.createDocumentFragment();e.forEach(n=>{const{largeImageURL:a,webformatURL:t,tags:o,likes:c,views:v,comments:w,downloads:I}=n,f=document.createElement("div");f.classList.add("image-card"),f.innerHTML=`
-            <a href="${a}" data-lightbox="image-set" data-title="${o}">
-                <img src="${t}" alt="${o}">
-                <div class="info">Likes: ${c}, Views: ${v}, Comments: ${w}, Downloads: ${I}</div>
-            </a>
-        `,r.appendChild(f)}),u.appendChild(r),P+=e.length}function b(){new $(".gallery a").refresh()}
+import{a as g,i as d,S as f}from"./assets/vendor-b42c18af.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))o(e);new MutationObserver(e=>{for(const s of e)if(s.type==="childList")for(const l of s.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&o(l)}).observe(document,{childList:!0,subtree:!0});function n(e){const s={};return e.integrity&&(s.integrity=e.integrity),e.referrerPolicy&&(s.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?s.credentials="include":e.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function o(e){if(e.ep)return;e.ep=!0;const s=n(e);fetch(e.href,s)}})();const y={form:document.querySelector(".form"),gallery:document.querySelector(".gallery"),loader:document.querySelector(".loader"),btnElem:document.querySelector(".btn")},{form:L,gallery:u,loader:c,btnElem:i}=y;c.classList.add("hidden");const a={key:"42200022-9c7e7676f0f903944c054771a",image_type:"photo",orientation:"horizontal",safesearch:!0,per_page:15,page:1,totalResults:0,q:""};L.addEventListener("submit",async t=>{if(t.preventDefault(),a.q=t.target.elements.input.value,!a.q)return;u.innerHTML="",c.classList.remove("hidden"),a.page=1;const r=await m();a.totalResults=r.totalHits,h(r),p(),t.target.reset()});i.addEventListener("click",async()=>{a.page+=1;const t=await m();h(t),p(),window.scrollBy({top:465,behavior:"smooth"})});async function m(){const t=new URLSearchParams(a);return(await g.get(`https://pixabay.com/api/?${t}`)).data}function h(t){if(t.hits.length===0)d.show({message:"Sorry, there are no images matching your search query. Please try again!",messageColor:"#FFFFFF",backgroundColor:"#EF4040",position:"topRight",messageSize:"16px",messageLineHeight:"24px",maxWidth:"432px"}),i.classList.add("hidden");else{const n=t.hits.map(o=>`<a class="gallery-link" href="${o.largeImageURL}">
+        <img class="gallery-image"
+        src="${o.webformatURL}"
+        alt="${o.tags}"
+         </a>
+        <div class="img-content">
+        <div>
+        <h3>Likes</h3>
+        <p>${o.likes}</p>
+        </div>
+
+        <div>
+        <h3>Views</h3>
+        <p>${o.views}</p>
+        </div>
+
+        <div>
+        <h3>Comments</h3>
+        <p>${o.comments}</p>
+        </div>
+
+        <div>
+        <h3>Downloads</h3>
+        <p>${o.downloads}</p>
+        </div>
+        </div>
+        `).join("");u.insertAdjacentHTML("beforeend",n),i.classList.remove("hidden")}new f(".gallery-link").refresh(),c.classList.add("hidden")}function p(){Math.ceil(a.totalResults/a.per_page)===a.page&&(i.classList.add("hidden"),d.show({message:"We're sorry, but you've reached the end of search results.",messageColor:"#FFFFFF",backgroundColor:"#ed6205",position:"bottomRight",messageSize:"16px",messageLineHeight:"24px",maxWidth:"432px"}))}
 //# sourceMappingURL=commonHelpers.js.map
